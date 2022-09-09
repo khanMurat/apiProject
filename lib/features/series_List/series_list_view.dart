@@ -20,37 +20,35 @@ class _SeriesViewState extends State<SeriesView> {
 
   @override
   void initState() {
-    _seriesListModel.getSeriesList();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<SeriesListViewModel>(context, listen: false).getSeriesList();
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(AppBarData.series),
-      body: Consumer<SeriesListViewModel>(builder: (context, viewModel, child) {
-        if (viewModel.tvList == null) {
-          return Center(
-            child: const CircularProgressIndicator(),
-          );
-        }
-        return GridView.count(
-          childAspectRatio: 0.6,
-          mainAxisSpacing: context.height * 0.1,
-          crossAxisSpacing: context.width * 0.01,
-          crossAxisCount: 2,
-          children: [
-            for (var series in viewModel.tvList)
-              SeriesWidget(
-                  onTap: () {
-                    NavigationService.instance.navigateToPage(
-                        NavigationConstants.detail,
-                        data: series);
-                  },
-                  seriesModel: series)
-          ],
-        );
-      }),
+      appBar: CustomAppBar(AppBarData.series, context),
+      body: Provider.of<SeriesListViewModel>(context).loading
+          ? const Center(child: CircularProgressIndicator())
+          : GridView.count(
+              childAspectRatio: 0.6,
+              mainAxisSpacing: context.height * 0.050,
+              crossAxisSpacing: context.width * 0.01,
+              crossAxisCount: 2,
+              children: [
+                for (var series
+                    in Provider.of<SeriesListViewModel>(context).tvList)
+                  SeriesWidget(
+                      onTap: () {
+                        NavigationService.instance.navigateToPage(
+                            NavigationConstants.detail,
+                            data: series);
+                      },
+                      seriesModel: series)
+              ],
+            ),
     );
   }
 }

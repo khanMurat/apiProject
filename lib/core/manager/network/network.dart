@@ -21,7 +21,7 @@ class Network {
       Uri.parse('https://www.episodate.com/api/most-popular?page=1'),
     );
     final data = convert.jsonDecode(response.body)['tv_shows'];
-    print(data);
+
     if (response.statusCode == 200) {
       return data;
     } else {

@@ -24,10 +24,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white70,
         currentIndex: _selectedIndex,
-        unselectedItemColor: Colors.blueGrey,
-        selectedItemColor: Colors.black,
         onTap: _onTap,
         items: [
           BottomNavigationBarItem(
@@ -46,7 +43,7 @@ class _HomeViewState extends State<HomeView> {
       case 0:
         return SeriesView();
       case 1:
-        return const LikedView();
+        return LikedView();
       default:
         return HomeView();
     }

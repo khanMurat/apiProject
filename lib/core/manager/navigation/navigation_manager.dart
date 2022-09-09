@@ -4,7 +4,7 @@ import 'package:api_project/features/home/home_view.dart';
 import 'package:api_project/features/liked/liked_view.dart';
 import 'package:api_project/features/series_List/series.dart';
 import 'package:api_project/features/series_List/series_list_view.dart';
-import 'package:api_project/features/series_List/series_list_view_model.dart';
+import 'package:api_project/features/splash/splash_view.dart';
 import 'package:flutter/material.dart';
 
 class NavigationManager {
@@ -15,6 +15,8 @@ class NavigationManager {
 
   Route<dynamic>? generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case NavigationConstants.splash:
+        return navigate(NavigationConstants.splash, SplashView());
       case NavigationConstants.home:
         return navigate(NavigationConstants.home, HomeView());
       case NavigationConstants.detail:

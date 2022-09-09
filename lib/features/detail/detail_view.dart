@@ -1,8 +1,10 @@
 import 'package:api_project/core/extensions/build_context_extension.dart';
 import 'package:api_project/core/manager/navigation/navigation_service.dart';
+import 'package:api_project/features/liked/liked_view_notifier.dart';
 import 'package:api_project/features/series_List/series.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class DetailView extends StatelessWidget {
   const DetailView({
@@ -22,7 +24,7 @@ class DetailView extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          _likedAndBackButtons(),
+          _likedAndBackButtons(context),
           _seriesImageWidget(),
           Expanded(
             child: customContainer(context),
@@ -32,7 +34,7 @@ class DetailView extends StatelessWidget {
     );
   }
 
-  Padding _likedAndBackButtons() {
+  Padding _likedAndBackButtons(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -46,7 +48,10 @@ class DetailView extends StatelessWidget {
             icon: const Icon(Icons.arrow_back),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<LikedViewNotifier>(context, listen: false)
+                  .addLiked(seriesModel);
+            },
             icon: const Icon(
               Icons.favorite,
               color: Colors.red,
